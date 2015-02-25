@@ -1,0 +1,11 @@
+---
+machine:
+  java:
+    version: oraclejdk8 
+
+test:
+  override: 
+    - cd flice-projects/notification; mvn clean package ; cd ..;
+    - cd flice-projects/core        ; mvn clean package ; cd ..;
+    - mv flice-projects/target/notification.jar $CIRCLE_ARTIFACTS/notification.jar
+    - mv flice-projects/target/core.jar         $CIRCLE_ARTIFACTS/core.jar
