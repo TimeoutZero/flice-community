@@ -17,7 +17,6 @@ public class Receiver implements MessageListener{
 
 	@SuppressWarnings("unchecked")
 	public void onMessage(Message message) {
-
 		try {
 			ByteArrayInputStream in = new ByteArrayInputStream(message.getBody());
 			ObjectInputStream is;
@@ -27,10 +26,8 @@ public class Receiver implements MessageListener{
 			System.out.println("Received <"+map.get("message")+">");
 			latch.countDown();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -22,10 +22,10 @@ public class NotificationService {
 	private final static String QUEUE_NAME = "spring-boot";
 
 	public void sendMessage(EmailNotificationDTO emailNotification) throws IOException, InterruptedException{
-		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("receivers", emailNotification.getReceivers());
 		map.put("message", emailNotification.getMessage());
+		
 		System.out.println("Sending message...");
         rabbitTemplate.convertAndSend(QUEUE_NAME, map);
         receiver.getLatch().await(1000, TimeUnit.MILLISECONDS);
