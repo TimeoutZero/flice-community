@@ -5,8 +5,6 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
-import org.hibernate.SessionFactory;
-
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import com.timeoutzero.flice.core.config.HibernateConfiguration;
 
@@ -28,9 +26,7 @@ public class CoreApplication extends Application<CoreConfiguration>{
 		
 		GuiceBundle<CoreConfiguration> guice = GuiceBundle.<CoreConfiguration>newBuilder()
 				.enableAutoConfig(PACKAGE_RESOURCE, PACKAGE_DAO)
-				.addModule(module -> {
-					module.bind(SessionFactory.class).toProvider(() -> hibernate.getSessionFactory());
-				})
+				.addModule(new CoreModule(hibernate))
 				.setConfigClass(CoreConfiguration.class)
 				.build();
 	
