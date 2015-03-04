@@ -17,6 +17,7 @@ public class CoreModule extends AbstractModule {
 	
 	@Override
 	protected void configure() {
+	
 		bind(SessionFactory.class).toProvider(new Provider<SessionFactory>() {
 
 			@Override
