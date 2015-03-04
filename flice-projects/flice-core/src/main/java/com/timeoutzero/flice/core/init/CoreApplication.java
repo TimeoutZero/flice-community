@@ -5,13 +5,17 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import org.hibernate.SessionFactory;
+
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import com.timeoutzero.flice.core.config.HibernateConfiguration;
 
+
 public class CoreApplication extends Application<CoreConfiguration>{
 
-	private static final String CORE_URL_API = "/core/api/*";
+	private static final String CORE_URL_API 	 = "/core/api/*";
 	private static final String PACKAGE_RESOURCE = "com.timeoutzero.flice.core.resource";
+	private static final String PACKAGE_DAO		 = "com.timeoutzero.flice.core.dao";
 
 	private final HibernateBundle<CoreConfiguration> hibernate = new HibernateConfiguration().getBundle();
 
@@ -23,8 +27,10 @@ public class CoreApplication extends Application<CoreConfiguration>{
 	public void initialize(Bootstrap<CoreConfiguration> bootstrap) {
 		
 		GuiceBundle<CoreConfiguration> guice = GuiceBundle.<CoreConfiguration>newBuilder()
-				.enableAutoConfig(PACKAGE_RESOURCE)
-				.addModule(module -> {})
+				.enableAutoConfig(PACKAGE_RESOURCE, PACKAGE_DAO)
+				.addModule(module -> {
+					module.bind(SessionFactory.class).toProvider(() -> hibernate.getSessionFactory());
+				})
 				.setConfigClass(CoreConfiguration.class)
 				.build();
 	
