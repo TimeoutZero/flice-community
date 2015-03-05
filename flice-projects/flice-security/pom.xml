@@ -4,10 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.timeoutzero</groupId>
-	<artifactId>flice-core</artifactId>
+	<artifactId>flice-security</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Flice-Core</name>
+	<name>Flice Security</name>
+
 
 	<properties>
 
@@ -19,10 +20,10 @@
 
 		<!-- GUICE -->
 		<guice.bundle>0.7.0.2</guice.bundle>
-		
+
 		<!-- SECURITY -->
 		<jbcrypt.version>0.3m</jbcrypt.version>
-	
+
 
 		<!-- UTIL -->
 		<project.lombok>1.16.2</project.lombok>
@@ -46,13 +47,13 @@
 			<artifactId>dropwizard-hibernate</artifactId>
 			<version>${dropwizard.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-auth</artifactId>
 			<version>${dropwizard.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-testing</artifactId>
@@ -72,13 +73,13 @@
 			<artifactId>lombok</artifactId>
 			<version>${project.lombok}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.connector.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.mindrot</groupId>
 			<artifactId>jbcrypt</artifactId>
@@ -89,7 +90,7 @@
 
 	<build>
 
-		<finalName>flice-core</finalName>
+		<finalName>flice-security</finalName>
 
 		<plugins>
 
@@ -141,4 +142,5 @@
 			</plugin>
 		</plugins>
 	</build>
+
 </project>

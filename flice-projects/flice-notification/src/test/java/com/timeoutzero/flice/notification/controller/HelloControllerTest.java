@@ -15,6 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.junit.Ignore;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = MockServletContext.class)
@@ -29,6 +30,7 @@ public class HelloControllerTest {
 	}
 
 	@Test
+	@Ignore
 	public void getHello() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/hello").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
