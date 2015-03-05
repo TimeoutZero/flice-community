@@ -14,15 +14,18 @@ import lombok.Setter;
 @Setter
 public class Comment extends AbstractEntity{
 
-	@Column(name="comment")
-	private String comment;
+	@Column(name="content")
+	private String content;
 	
 	@ManyToOne
 	private Topic topic;
 	
 	@ManyToOne
-	private User user;
+	private User owner;
 	
-	@Column(name="date")
-	private LocalDateTime date;
+	@Column(name="created")
+	private LocalDateTime created;
+	
+	@Column(name="active")
+	private Boolean active;
 }

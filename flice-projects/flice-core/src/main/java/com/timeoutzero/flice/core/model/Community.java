@@ -21,8 +21,15 @@ public class Community extends AbstractEntity{
 	private String description;
 	
 	@ManyToOne
-	private User user;
+	private User owner;
 	
-	@Column(name="date")
-	private LocalDateTime date;
+	@Column(name="created")
+	private LocalDateTime created;
+	
+	@Column(name="image")
+	private String image;
+
+	@Column(name="active")
+	private Boolean active;
+	
 }

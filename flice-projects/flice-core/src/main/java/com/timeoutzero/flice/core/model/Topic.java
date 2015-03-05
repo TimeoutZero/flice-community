@@ -25,4 +25,7 @@ public class Topic extends AbstractEntity{
 	
 	@Column(name="created")
 	private LocalDateTime created;
+	
+	@Column(name="active")
+	private Boolean active;
 }
