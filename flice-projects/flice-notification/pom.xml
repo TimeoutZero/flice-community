@@ -4,7 +4,7 @@
 
 	<groupId>com.timeoutzero</groupId>
 	<artifactId>flice-notification</artifactId>
-	<version>0.1.0</version>
+	<version>0.0.1</version>
 
 	<name>notification</name>
 	<url>http://maven.apache.org</url>
