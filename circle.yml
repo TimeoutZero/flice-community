@@ -8,6 +8,6 @@ test:
     - cd flice-projects/flice-notification; mvn clean package ; cd ..;
     - cd flice-projects/flice-core        ; mvn clean package ; cd ../../;
     - cd flice-projects/flice-security    ; mvn clean package ; cd ../../;
-    - mv flice-projects/flice-security/target/flice-notification.jar $CIRCLE_ARTIFACTS/flice-notification.jar
-    - mv flice-projects/flice-core/target/flice-core.jar             $CIRCLE_ARTIFACTS/flice-core.jar
-    - mv flice-projects/flice-security/target/flice-security.jar     $CIRCLE_ARTIFACTS/flice-security.jar
+    - mv flice-projects/flice-notification/target/flice-notification.jar $CIRCLE_ARTIFACTS/flice-notification.jar
+    - mv flice-projects/flice-core/target/flice-core.jar                 $CIRCLE_ARTIFACTS/flice-core.jar
+    - mv flice-projects/flice-security/target/flice-security.jar         $CIRCLE_ARTIFACTS/flice-security.jar
