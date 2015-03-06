@@ -18,6 +18,9 @@ public class CoreConfiguration extends Configuration{
 	@JsonProperty
 	private String application;
 	
+	@JsonProperty("application-client-id")
+	private String applicationClientId;
+	
 	@Valid
 	@NotNull
 	@JsonProperty

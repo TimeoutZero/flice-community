@@ -6,17 +6,17 @@ application-client-id : "Y29yZQ=="
 server:
   applicationConnectors:
   - type: http 
-    port: 8081
+    port: 9000
   adminConnectors:
   - type: http
-    port: 9091
+    port: 9001
 
 allowedGrantTypes:
   - password
 
 httpClient:
-  timeout                 : 500ms
-  connectionTimeout       : 500ms
+  timeout                 : 20000ms
+  connectionTimeout       : 20000ms
   timeToLive              : 1h
   cookiesEnabled          : false
   maxConnections          : 1024

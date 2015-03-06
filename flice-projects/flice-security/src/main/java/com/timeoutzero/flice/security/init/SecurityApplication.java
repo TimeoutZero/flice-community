@@ -5,6 +5,7 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import com.google.inject.Stage;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 
 public class SecurityApplication extends Application<SecurityConfiguration>{
@@ -26,7 +27,7 @@ public class SecurityApplication extends Application<SecurityConfiguration>{
 				.addModule(new SecurityModule(hibernate))
 				.enableAutoConfig(PACKAGE_RESOURCE, PACKAGE_DAO)
 				.setConfigClass(SecurityConfiguration.class)
-				.build();
+				.build(Stage.DEVELOPMENT);
 		
 		bootstrap.addBundle(hibernate);
 		bootstrap.addBundle(guice);

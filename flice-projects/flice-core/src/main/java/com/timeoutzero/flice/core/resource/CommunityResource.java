@@ -29,6 +29,7 @@ public class CommunityResource {
 	@Timed
 	@UnitOfWork
 	public Response create(@Valid CommunityForm form){
+		
 		Community community = form.toEntity();
 		community = dao.create(community);
 		

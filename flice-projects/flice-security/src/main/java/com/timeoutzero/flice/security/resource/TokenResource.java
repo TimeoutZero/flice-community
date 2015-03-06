@@ -17,7 +17,6 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -86,11 +85,14 @@ public class TokenResource {
 			
 			request.setEntity(new UrlEncodedFormEntity(params));
 			
-			HttpResponse response = httpClient.execute(request);
+			int status = httpClient.execute(request).getStatusLine().getStatusCode();
 			
-			if(response.getStatusLine().getStatusCode() == HttpStatus.OK_200) {
+			if(status == HttpStatus.OK_200) {
 				isValidUser = true;
+			} else {
+				throw new WebApplicationException(status);
 			}
+			
 			
 		} catch (RuntimeException | IOException e) {
 			throw new WebApplicationException(e);
@@ -111,14 +113,4 @@ public class TokenResource {
 			throw new WebApplicationException(response);
 		}
 	}
-	
-//	private void isValidUser(String email, String password) {
-
-//		if (user != null && user.getEmail().equalsIgnoreCase(email)) {
-//
-//			if (!BCrypt.checkpw(password, user.getPassword())) {
-//				throw new WebApplicationException(Response.status(Response.Status.UNAUTHORIZED).build());
-//			}
-//		}
-//	}
 }

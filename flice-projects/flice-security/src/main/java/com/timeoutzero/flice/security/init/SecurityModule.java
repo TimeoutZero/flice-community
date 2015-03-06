@@ -11,6 +11,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 
 public class SecurityModule extends AbstractModule {
 	
@@ -36,7 +37,7 @@ public class SecurityModule extends AbstractModule {
 		return configuration.getAllowedGrantTypes();
 	}
 	
-	@Provides
+	@Provides @Singleton
 	public HttpClient httpClient(Environment environment, SecurityConfiguration configuraiton) {
 		return new HttpClientBuilder(environment).using(configuraiton.getHttpClient()).build("httpClient");
 	}
