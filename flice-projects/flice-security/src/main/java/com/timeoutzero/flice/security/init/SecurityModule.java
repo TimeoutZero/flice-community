@@ -1,11 +1,16 @@
 package com.timeoutzero.flice.security.init;
 
+import io.dropwizard.client.HttpClientBuilder;
 import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.setup.Environment;
 
+import org.apache.http.client.HttpClient;
 import org.hibernate.SessionFactory;
 
+import com.google.common.collect.ImmutableList;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
+import com.google.inject.Provides;
 
 public class SecurityModule extends AbstractModule {
 	
@@ -25,4 +30,15 @@ public class SecurityModule extends AbstractModule {
 			}
 		});;
 	}
+	
+	@Provides
+	public ImmutableList<String> allowedGrantType(SecurityConfiguration configuration) {
+		return configuration.getAllowedGrantTypes();
+	}
+	
+	@Provides
+	public HttpClient httpClient(Environment environment, SecurityConfiguration configuraiton) {
+		return new HttpClientBuilder(environment).using(configuraiton.getHttpClient()).build("httpClient");
+	}
+	
 }

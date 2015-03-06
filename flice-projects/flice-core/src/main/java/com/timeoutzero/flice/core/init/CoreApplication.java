@@ -32,6 +32,7 @@ public class CoreApplication extends Application<CoreConfiguration>{
 	
 		bootstrap.addBundle(guice); 
 		bootstrap.addBundle(hibernate);
+		
 	}
 
 	@Override

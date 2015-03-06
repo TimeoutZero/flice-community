@@ -36,5 +36,6 @@ public class SecurityApplication extends Application<SecurityConfiguration>{
 	public void run(SecurityConfiguration configuration, Environment environment) throws Exception {
 		
 		environment.jersey().setUrlPattern(SECURITY_URL_API);
+		
 	}
 }

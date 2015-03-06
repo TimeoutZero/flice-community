@@ -13,7 +13,7 @@ public class HibernateConfiguration {
 
 		@Override
 		public DataSourceFactory getDataSourceFactory(SecurityConfiguration configuration) {
-			return null;
+			return configuration.getDatasource();
 		}
 	};
 }

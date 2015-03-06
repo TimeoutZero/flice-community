@@ -1,4 +1,4 @@
-package com.timeoutzero.flice.core.dto;
+package com.timeoutzero.flice.core.api;
 
 import lombok.Getter;
 

@@ -1,6 +1,7 @@
 ---
 
-application: "flice-core"
+application           : "flice-core"
+application-client-id : "Y29yZQ=="
 
 datasource: 
 

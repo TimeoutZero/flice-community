@@ -8,7 +8,6 @@ import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.setup.Environment;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import com.timeoutzero.flice.core.init.CoreApplication;
 import com.timeoutzero.flice.core.init.CoreConfiguration;

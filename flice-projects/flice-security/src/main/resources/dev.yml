@@ -1,0 +1,43 @@
+---
+
+application           : "flice-security"
+application-client-id : "Y29yZQ=="
+
+server:
+  applicationConnectors:
+  - type: http 
+    port: 8081
+  adminConnectors:
+  - type: http
+    port: 9091
+
+allowedGrantTypes:
+  - password
+
+httpClient:
+  timeout                 : 500ms
+  connectionTimeout       : 500ms
+  timeToLive              : 1h
+  cookiesEnabled          : false
+  maxConnections          : 1024
+  maxConnectionsPerRoute  : 1024
+  keepAlive               : 0ms
+  retries                 : 0
+  userAgent               : flice-security  
+
+datasource: 
+
+  user            : root
+  password        : 
+  url             : jdbc:mysql://localhost:3306/flice-security
+  driverClass     : com.mysql.jdbc.Driver
+
+  validationQuery : SELECT 1
+  minSize         : 1
+
+  properties:
+    hibernate.dialect       : org.hibernate.dialect.MySQLDialect
+    hibernate.hbm2ddl.auto  : create-drop
+
+logging:
+  level: INFO

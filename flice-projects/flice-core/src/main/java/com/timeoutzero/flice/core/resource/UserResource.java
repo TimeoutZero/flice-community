@@ -13,8 +13,8 @@ import javax.ws.rs.core.Response;
 import org.eclipse.jetty.http.HttpStatus;
 
 import com.codahale.metrics.annotation.Timed;
+import com.timeoutzero.flice.core.api.UserDTO;
 import com.timeoutzero.flice.core.dao.UserDAO;
-import com.timeoutzero.flice.core.dto.UserDTO;
 import com.timeoutzero.flice.core.form.UserForm;
 import com.timeoutzero.flice.core.model.User;
 
