@@ -21,8 +21,11 @@ public class Topic extends AbstractEntity{
 	private Community community;
 	
 	@ManyToOne
-	private User user;
+	private User owner;
 	
-	@Column(name="date")
-	private LocalDateTime date;
+	@Column(name="created")
+	private LocalDateTime created;
+	
+	@Column(name="active")
+	private Boolean active;
 }
