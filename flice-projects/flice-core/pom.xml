@@ -25,7 +25,6 @@
 		<!-- SECURITY -->
 		<jbcrypt.version>0.3m</jbcrypt.version>
 	
-
 		<!-- UTIL -->
 		<project.lombok>1.16.2</project.lombok>
 		<mysql.connector.version>5.1.34</mysql.connector.version>
@@ -58,6 +57,12 @@
 		<dependency>
 			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-testing</artifactId>
+			<version>${dropwizard.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>io.dropwizard</groupId>
+			<artifactId>dropwizard-client</artifactId>
 			<version>${dropwizard.version}</version>
 		</dependency>
 

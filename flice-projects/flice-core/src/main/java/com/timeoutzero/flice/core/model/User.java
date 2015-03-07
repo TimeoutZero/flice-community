@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NamedQueries({
-	@NamedQuery(name ="User.findByEmail", query = "from User u where u.email = :email")
+	@NamedQuery(name = "User.findByEmail", query = "from User u where u.email = :email")
 })
 public class User extends AbstractEntity {
 

@@ -3,6 +3,8 @@ package com.timeoutzero.flice.security.resource;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -25,9 +29,11 @@ import org.apache.http.message.BasicNameValuePair;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import com.sun.jersey.api.Responses;
+import com.timeoutzero.flice.security.api.OAuthProblem;
 import com.timeoutzero.flice.security.dao.AccessTokenDAO;
 import com.timeoutzero.flice.security.model.AccessToken;
 
@@ -35,21 +41,57 @@ import com.timeoutzero.flice.security.model.AccessToken;
 @Produces(MediaType.APPLICATION_JSON)
 public class TokenResource {
 	
+	private static final String PATTERN  		 = "dd/MM/yyyy HH:mm";
 	private static final String ACCESS_TOKEN_KEY = "accessToken";
+	private static final int ACCESS_TOKEN_EXPIRE_TIME_MIN = 30;
 	
 	@Inject
 	private HttpClient httpClient;
 	
-	@Inject
-	private AccessTokenDAO tokenDAO;
+	@Inject 
+	private AccessTokenDAO accessTokenDAO;
 	
 	@Inject
 	private ImmutableList<String> allowedGrantType;
+
+	
+	@GET
+	@UnitOfWork
+	@Path("/verify")
+	public Response verify(@HeaderParam("accessToken") String accessToken){
+		
+		Optional<AccessToken> accessTokenOptional = accessTokenDAO.findByValue(accessToken);
+		
+		if(accessTokenOptional == null || !accessTokenOptional.isPresent()) {
+			throw new WebApplicationException(HttpStatus.NOT_FOUND_404);
+		}
+		
+		LocalDateTime lastAccess = accessTokenOptional.get().getLastAccess();
+		
+		long minutes = ChronoUnit.MINUTES.between(lastAccess, LocalDateTime.now());
+		
+		if(minutes > ACCESS_TOKEN_EXPIRE_TIME_MIN) {
+			
+			String lastAccessFormatted 	= lastAccess.toString();
+			String currentTimeFormatted = LocalDateTime.now().toString();
+			String message = String.format(OAuthProblem.SESSION_HAS_EXPIRED, lastAccessFormatted, currentTimeFormatted);
+			
+			throw new WebApplicationException(Response.status(HttpStatus.UNAUTHORIZED_401).entity(new OAuthProblem(message)).build());
+		}
+		
+		accessTokenDAO.updateLastAccessTime(accessTokenOptional.get().getId());
+		
+		Map<String, String> entity = new HashMap<>();
+		entity.put("email", accessTokenOptional.get().getEmail());
+		
+		return Response.status(HttpStatus.OK_200).entity(entity).build();
+		
+	}
  
 	@POST
 	@UnitOfWork
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Map<String, String> postForToken(
+	public Response postForToken(
 			@FormParam("grant_type") String grantType,
 			@FormParam("client_id") String clientId, 
 			@FormParam("email") String email,
@@ -58,15 +100,14 @@ public class TokenResource {
 		isValidGrantType(grantType);
 		isValidClientId(clientId);
 		
-		Map<String, String> json = new HashMap<>(); 
+		AccessToken token = null;
 
 		if(isValidUser(email, password)) {
 			
-			AccessToken token = tokenDAO.generateAccessToken(email); 
-			json.put(ACCESS_TOKEN_KEY, token.getToken());
+			token = accessTokenDAO.generateAccessToken(email); 
 		}
 		
-		return json;
+		return Response.status(HttpStatus.CREATED_201).entity(new AccessToken(token.getToken())).build();
 	}
 
 

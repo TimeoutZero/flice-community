@@ -1,5 +1,7 @@
 package com.timeoutzero.flice.security.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -7,21 +9,19 @@ import javax.persistence.NamedQuery;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.joda.time.DateTime;
-
 import com.sun.jersey.core.util.Base64;
 
 @Entity
 @Getter
 @Setter
 @NamedQueries({
-	@NamedQuery(name = "AccessToken.findByEmail", query = "from AccessToken a where a.email = :email")
+	@NamedQuery(name = "AccessToken.findByValue", query = "from AccessToken a where a.token = :value")
 })
 public class AccessToken extends AbstractEntity {
 
 	private String email;
 	private String token;
-	private DateTime lastAccess;
+	private LocalDateTime lastAccess;
 	
 	public AccessToken() {
 		super();
@@ -29,7 +29,7 @@ public class AccessToken extends AbstractEntity {
 	
 	public AccessToken(String email) {
 		
-		DateTime lastAccess = DateTime.now();
+		LocalDateTime lastAccess = LocalDateTime.now();
 		String parameters = this.email + this.lastAccess;
 		
 		this.email		= email;

@@ -2,10 +2,11 @@ package com.timeoutzero.flice.security.dao;
 
 import io.dropwizard.hibernate.AbstractDAO;
 
+import java.time.LocalDateTime;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.joda.time.DateTime;
 
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
@@ -26,22 +27,24 @@ public class AccessTokenDAO extends AbstractDAO<AccessToken>{
 		return accessToken;
 	}
 	
-	public Optional<AccessToken> findByEmail(String id){
+	public Optional<AccessToken> findByValue(String accessToken){
 		
-		Query query = namedQuery("AccessToken.findByEmail");
-		AccessToken accessToken = uniqueResult(query);
+		Query query = namedQuery("AccessToken.findByValue");
+		query.setParameter("value", accessToken);
 		
-		if(accessToken == null){
+		AccessToken result = uniqueResult(query);
+		
+		if(result == null){
 			return Optional.absent();
 		}
 		
-		return Optional.of(accessToken);
+		return Optional.of(result);
 	}
 
-	public AccessToken updateLastAccessTime(String id) {
+	public AccessToken updateLastAccessTime(Long id) {
 		
 		AccessToken accessToken = get(id);
-		accessToken.setLastAccess(DateTime.now());
+		accessToken.setLastAccess(LocalDateTime.now());
 		
 		accessToken = persist(accessToken);
 		

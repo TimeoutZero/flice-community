@@ -1,11 +1,16 @@
 package com.timeoutzero.flice.core.resource;
 
+import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -28,6 +33,17 @@ public class UserResource {
 
 	@Inject
 	private UserDAO dao;
+	
+	@GET
+	@Path("/me")
+	@UnitOfWork
+	public Map<String, String> me(@Auth User user) {
+	
+		Map<String, String> hashMap = new HashMap<>();
+		hashMap.put("email", user.getEmail());
+		
+		return hashMap;
+	}
 
 	@POST
 	@Timed

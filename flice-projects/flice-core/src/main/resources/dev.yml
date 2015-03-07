@@ -3,6 +3,14 @@
 application           : "flice-core"
 application-client-id : "Y29yZQ=="
 
+server:
+  applicationConnectors:
+  - type: http 
+    port: 8080
+  adminConnectors:
+  - type: http
+    port: 9090
+
 datasource: 
 
   user            : root
@@ -17,6 +25,16 @@ datasource:
     hibernate.dialect       : org.hibernate.dialect.MySQLDialect
     hibernate.hbm2ddl.auto  : create-drop
 
-
 logging:
   level: INFO
+
+httpClient:
+  timeout                 : 20000ms
+  connectionTimeout       : 20000ms
+  timeToLive              : 1h
+  cookiesEnabled          : false
+  maxConnections          : 1024
+  maxConnectionsPerRoute  : 1024
+  keepAlive               : 0ms
+  retries                 : 0
+  userAgent               : flice-core

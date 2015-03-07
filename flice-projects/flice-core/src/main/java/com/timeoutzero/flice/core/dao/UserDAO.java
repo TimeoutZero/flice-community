@@ -24,6 +24,7 @@ public class UserDAO extends AbstractDAO<User> {
 		
 		Query namedQuery = namedQuery("User.findByEmail");
 		namedQuery.setParameter("email", email);
+		
 		return uniqueResult(namedQuery);
 	}
 }

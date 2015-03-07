@@ -1,6 +1,7 @@
 package com.timeoutzero.flice.core.init;
 
 import io.dropwizard.Configuration;
+import io.dropwizard.client.HttpClientConfiguration;
 import io.dropwizard.db.DataSourceFactory;
 
 import javax.validation.Valid;
@@ -25,5 +26,10 @@ public class CoreConfiguration extends Configuration{
 	@NotNull
 	@JsonProperty
 	private DataSourceFactory datasource;
+	
+	@Valid
+    @NotNull
+    @JsonProperty
+    private HttpClientConfiguration httpClient = new HttpClientConfiguration();
 	
 }
