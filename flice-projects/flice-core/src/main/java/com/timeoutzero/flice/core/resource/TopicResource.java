@@ -17,6 +17,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.eclipse.jetty.http.HttpStatus;
 
 import com.codahale.metrics.annotation.Timed;
 import com.timeoutzero.flice.core.dao.CommunityDAO;
@@ -62,7 +65,7 @@ public class TopicResource {
 	@POST
 	@Timed
 	@UnitOfWork
-	public TopicDTO create(@Valid TopicForm form, @Auth User user){
+	public Response create(@Valid TopicForm form, @Auth User user){
 		Topic topic = form.toEntity();
 		
 		topic.setCreated(LocalDateTime.now());
@@ -72,7 +75,8 @@ public class TopicResource {
 		
 		topic = dao.save(topic);
 		
-		return new TopicDTO(topic);
+		TopicDTO dto = new TopicDTO(topic);
+		return Response.status(HttpStatus.CREATED_201).entity(dto).build();
 	}
 	
 	@PUT
@@ -94,7 +98,7 @@ public class TopicResource {
 	@Timed
 	@UnitOfWork
 	@Path("/{id}")
-	public TopicDTO delete(@PathParam("id") Long id){
+	public TopicDTO delete(@PathParam("id") Long id, @Auth User user){
 		Topic topic = dao.load(id);
 		topic.setActive(false);
 		topic = dao.save(topic);
