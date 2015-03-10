@@ -39,6 +39,7 @@ public class TopicResource {
 	@GET
 	@Timed
 	@UnitOfWork
+	@Path("/{id}")
 	public TopicDTO findById(@PathParam("id") Long id, @Auth User user){
 		Topic topic = dao.loadActive(id);
 		return new TopicDTO(topic);
@@ -77,6 +78,7 @@ public class TopicResource {
 	@PUT
 	@Timed
 	@UnitOfWork
+	@Path("/{id}")
 	public TopicDTO update(@PathParam("id") Long id, @Valid TopicForm form, @Auth User user){
 		Topic topic = dao.load(id);
 		topic.setCommunity(communityDAO.loadActive(form.getCommunityId()));
@@ -91,6 +93,7 @@ public class TopicResource {
 	@DELETE
 	@Timed
 	@UnitOfWork
+	@Path("/{id}")
 	public TopicDTO delete(@PathParam("id") Long id){
 		Topic topic = dao.load(id);
 		topic.setActive(false);

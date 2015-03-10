@@ -38,6 +38,7 @@ public class CommunityResource {
 	@GET
 	@Timed
 	@UnitOfWork
+	@Path("/{id}")
 	public CommunityDTO findById(@PathParam("id") Long id, @Auth User user){
 		
 		Community community = dao.loadActive(id);
@@ -77,6 +78,7 @@ public class CommunityResource {
 	@PUT
 	@Timed
 	@UnitOfWork
+	@Path("/{id}")
 	public CommunityDTO update(@PathParam("id") Long id, @Valid CommunityForm form, @Auth User user){
 		
 		Community community = dao.load(id);
@@ -94,6 +96,7 @@ public class CommunityResource {
 	@DELETE
 	@Timed
 	@UnitOfWork
+	@Path("/{id}")
 	public CommunityDTO delete(@PathParam("id") Long id, @Auth User user){
 		
 		Community community = dao.load(id);
