@@ -33,6 +33,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import com.sun.jersey.api.Responses;
+import com.timeoutzero.flice.security.api.AccessTokenDTO;
 import com.timeoutzero.flice.security.api.OAuthProblem;
 import com.timeoutzero.flice.security.dao.AccessTokenDAO;
 import com.timeoutzero.flice.security.model.AccessToken;
@@ -41,8 +42,6 @@ import com.timeoutzero.flice.security.model.AccessToken;
 @Produces(MediaType.APPLICATION_JSON)
 public class TokenResource {
 	
-	private static final String PATTERN  		 = "dd/MM/yyyy HH:mm";
-	private static final String ACCESS_TOKEN_KEY = "accessToken";
 	private static final int ACCESS_TOKEN_EXPIRE_TIME_MIN = 30;
 	
 	@Inject
@@ -53,7 +52,6 @@ public class TokenResource {
 	
 	@Inject
 	private ImmutableList<String> allowedGrantType;
-
 	
 	@GET
 	@UnitOfWork
@@ -107,9 +105,8 @@ public class TokenResource {
 			token = accessTokenDAO.generateAccessToken(email); 
 		}
 		
-		return Response.status(HttpStatus.CREATED_201).entity(new AccessToken(token.getToken())).build();
+		return Response.status(HttpStatus.CREATED_201).entity(new AccessTokenDTO(token.getToken())).build();
 	}
-
 
 	private boolean isValidUser(String email, String password)  {
 		

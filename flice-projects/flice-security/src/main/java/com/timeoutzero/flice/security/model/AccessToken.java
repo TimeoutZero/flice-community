@@ -1,6 +1,14 @@
 package com.timeoutzero.flice.security.model;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -8,8 +16,6 @@ import javax.persistence.NamedQuery;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import com.sun.jersey.core.util.Base64;
 
 @Entity
 @Getter
@@ -29,11 +35,25 @@ public class AccessToken extends AbstractEntity {
 	
 	public AccessToken(String email) {
 		
-		LocalDateTime lastAccess = LocalDateTime.now();
-		String parameters = this.email + this.lastAccess;
+		SecureRandom random = new SecureRandom();
+		byte[] key = new byte[64];
+		random.nextBytes(key);
+		
+		LocalDateTime expiration = LocalDateTime.now().plusDays(1);
+		Date convertedExpiration = Date.from(expiration.atZone(ZoneId.systemDefault()).toInstant());
+		
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("admin", false);
+		
+		String token = Jwts.builder()
+				.setSubject(email)
+				.setExpiration(convertedExpiration)
+				.setClaims(claims)
+				.signWith(SignatureAlgorithm.HS256, key)
+				.compact();
 		
 		this.email		= email;
-		this.token 		= new String(Base64.encode(parameters));
-		this.lastAccess = lastAccess;
+		this.token 		= token;
+		this.lastAccess = LocalDateTime.now();
 	}
 }
