@@ -1,11 +1,11 @@
 package com.timeoutzero.flice.core.resource;
 
+import io.dropwizard.auth.Auth;
+import io.dropwizard.hibernate.UnitOfWork;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.dropwizard.auth.Auth;
-import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -44,6 +44,7 @@ public class CommentResource {
 	@UnitOfWork
 	@Path("/{id}")
 	public CommentDTO findById(@PathParam("id") Long id, @Auth User user){
+		
 		Comment comment = dao.loadActive(id);
 		return new CommentDTO(comment);
 	}
@@ -52,6 +53,7 @@ public class CommentResource {
 	@Timed
 	@UnitOfWork
 	public List<CommentDTO> list(@Auth User user){
+		
 		List<Comment> list = dao.list();
 		
 		List<CommentDTO> dtos = new ArrayList<CommentDTO>();
@@ -66,6 +68,7 @@ public class CommentResource {
 	@Timed
 	@UnitOfWork
 	public Response create(@Valid CommentForm form, @Auth User user){
+		
 		Comment comment = form.toEntity();
 		comment.setActive(true);
 		comment.setCreated(LocalDateTime.now());
@@ -84,6 +87,7 @@ public class CommentResource {
 	@UnitOfWork
 	@Path("/{id}")
 	public CommentDTO update(@PathParam("id") Long id, @Valid CommentForm form, @Auth User user){
+		
 		Comment comment = dao.load(id);
 		comment.setContent(form.getContent());
 		comment.setOwner(user);
@@ -99,6 +103,7 @@ public class CommentResource {
 	@UnitOfWork
 	@Path("/{id}")
 	public CommentDTO delete(@PathParam("id") Long id, @Auth User user){
+		
 		Comment comment = dao.load(id);
 		comment.setActive(false);
 		comment = dao.save(comment);

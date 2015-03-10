@@ -44,6 +44,7 @@ public class TopicResource {
 	@UnitOfWork
 	@Path("/{id}")
 	public TopicDTO findById(@PathParam("id") Long id, @Auth User user){
+		
 		Topic topic = dao.loadActive(id);
 		return new TopicDTO(topic);
 	}
@@ -52,6 +53,7 @@ public class TopicResource {
 	@Timed
 	@UnitOfWork
 	public List<TopicDTO> list(@Auth User user){
+		
 		List<Topic> list = dao.list();
 		
 		List<TopicDTO> dtos = new ArrayList<TopicDTO>();
@@ -66,6 +68,7 @@ public class TopicResource {
 	@Timed
 	@UnitOfWork
 	public Response create(@Valid TopicForm form, @Auth User user){
+		
 		Topic topic = form.toEntity();
 		
 		topic.setCreated(LocalDateTime.now());
@@ -84,6 +87,7 @@ public class TopicResource {
 	@UnitOfWork
 	@Path("/{id}")
 	public TopicDTO update(@PathParam("id") Long id, @Valid TopicForm form, @Auth User user){
+		
 		Topic topic = dao.load(id);
 		topic.setCommunity(communityDAO.loadActive(form.getCommunityId()));
 		topic.setName(form.getName());
@@ -99,6 +103,7 @@ public class TopicResource {
 	@UnitOfWork
 	@Path("/{id}")
 	public TopicDTO delete(@PathParam("id") Long id, @Auth User user){
+		
 		Topic topic = dao.load(id);
 		topic.setActive(false);
 		topic = dao.save(topic);

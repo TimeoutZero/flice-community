@@ -1,11 +1,11 @@
 package com.timeoutzero.flice.core.resource;
 
+import io.dropwizard.auth.Auth;
+import io.dropwizard.hibernate.UnitOfWork;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.dropwizard.auth.Auth;
-import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -50,6 +50,7 @@ public class CommunityResource {
 	@Timed
 	@UnitOfWork
 	public List<CommunityDTO> list(@Auth User user){
+		
 		List<Community> list = dao.list();
 		
 		List<CommunityDTO> dtos = new ArrayList<CommunityDTO>();
@@ -105,7 +106,6 @@ public class CommunityResource {
 		dao.save(community);
 		
 		return new CommunityDTO(community);
-		
 	}
 	
 }
