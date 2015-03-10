@@ -41,8 +41,6 @@ import com.timeoutzero.flice.security.model.AccessToken;
 @Produces(MediaType.APPLICATION_JSON)
 public class TokenResource {
 	
-	private static final String PATTERN  		 = "dd/MM/yyyy HH:mm";
-	private static final String ACCESS_TOKEN_KEY = "accessToken";
 	private static final int ACCESS_TOKEN_EXPIRE_TIME_MIN = 30;
 	
 	@Inject
@@ -53,7 +51,6 @@ public class TokenResource {
 	
 	@Inject
 	private ImmutableList<String> allowedGrantType;
-
 	
 	@GET
 	@UnitOfWork
@@ -109,7 +106,6 @@ public class TokenResource {
 		
 		return Response.status(HttpStatus.CREATED_201).entity(new AccessToken(token.getToken())).build();
 	}
-
 
 	private boolean isValidUser(String email, String password)  {
 		
