@@ -6,14 +6,25 @@ nginx:
     - "80:80"
 
 mysql:
-  image: mysql:5.7
+  image: lucasgmartins/mysql
   ports:
     - "3307:3306"
   environment:
-    MYSQL_DATABASE      : flice-core
-    MYSQL_ROOT_PASSWORD : ZmxpY2UNCg==
+    MYSQL_ROOT_PASSWORD     : ZmxpY2UNCg==
+    MYSQL_CORE_DATABASE     : flice-core
+    MYSQL_SECURITY_DATABASE : flice-security
 
 rabbitmq:
   image: rabbitmq:3.4.4-management
-  ports:
+  ports: 
     - "15672:15672"
+
+# Apps
+
+core:
+  image: lucasgmartins/flice-core
+  ports:
+    - "8080:8080"
+    - "9090:9090"
+  links:
+    - mysql

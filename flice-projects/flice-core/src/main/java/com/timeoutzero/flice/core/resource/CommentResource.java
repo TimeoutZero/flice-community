@@ -4,8 +4,8 @@ import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -56,12 +56,9 @@ public class CommentResource {
 		
 		List<Comment> list = dao.list();
 		
-		List<CommentDTO> dtos = new ArrayList<CommentDTO>();
-		for(Comment comment : list){
-			dtos.add(new CommentDTO(comment));
-		}
-		
-		return dtos;
+		return list.stream()
+				.map(CommentDTO::new)
+				.collect(Collectors.toList());
 	}
 	
 	@POST
@@ -107,6 +104,7 @@ public class CommentResource {
 		Comment comment = dao.load(id);
 		comment.setActive(false);
 		comment = dao.save(comment);
+		
 		return new CommentDTO(comment);
 	}
 	
