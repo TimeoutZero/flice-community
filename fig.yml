@@ -19,12 +19,27 @@ rabbitmq:
   ports: 
     - "15672:15672"
 
-# Apps
-
 core:
-  image: lucasgmartins/flice-core
-  ports:
+  image: lucasgmartins/java8
+  volumes:
+    - flice-projects/flice-core/target/flice-core.jar:/app/flice-core.jar
+    - flice-projects/flice-core/src/main/resources/docker.yml:/app/docker.yml
+  ports: 
     - "8080:8080"
     - "9090:9090"
   links:
     - mysql
+  command: java -jar /app/flice-core.jar server /app/docker.yml
+
+security:
+  image: lucasgmartins/java8
+  volumes:
+    - flice-projects/flice-security/target/flice-security.jar:/app/flice-security.jar
+    - flice-projects/flice-security/src/main/resources/docker.yml:/app/docker.yml
+  ports: 
+    - "8081:8081"
+    - "9091:9091"
+  links:
+    - mysql
+  command: java -jar /app/flice-security.jar server /app/docker.yml
+
