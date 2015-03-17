@@ -1,0 +1,14 @@
+scripts/features/login/scripts/login-controller.js
+scripts/features/login/scripts/login-interceptor.js
+scripts/features/login/scripts/login-routes.js
+scripts/features/login/scripts/login-service.js
+
+scripts/features/user/scripts/user-service.js
+
+scripts/features/community/scripts/routes.js
+scripts/features/community/scripts/service.js
+scripts/features/community/scripts/community-controller.js
+scripts/features/community/scripts/create-controller.js
+scripts/features/community/scripts/edit-controller.js
+scripts/features/community/scripts/list-controller.js
+
