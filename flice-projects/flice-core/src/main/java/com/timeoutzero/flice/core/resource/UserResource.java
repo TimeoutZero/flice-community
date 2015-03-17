@@ -12,7 +12,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
@@ -23,9 +25,17 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import com.codahale.metrics.annotation.Timed;
 import com.timeoutzero.flice.core.api.UserDTO;
+import com.timeoutzero.flice.core.dao.CommunityDAO;
+import com.timeoutzero.flice.core.dao.TopicDAO;
+import com.timeoutzero.flice.core.dao.UserCommunityDAO;
 import com.timeoutzero.flice.core.dao.UserDAO;
+import com.timeoutzero.flice.core.dao.UserTopicDAO;
 import com.timeoutzero.flice.core.form.UserForm;
+import com.timeoutzero.flice.core.model.Community;
+import com.timeoutzero.flice.core.model.Topic;
 import com.timeoutzero.flice.core.model.User;
+import com.timeoutzero.flice.core.model.UserCommunity;
+import com.timeoutzero.flice.core.model.UserTopic;
 
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
@@ -33,6 +43,17 @@ public class UserResource {
 
 	@Inject
 	private UserDAO dao;
+	
+	@Inject
+	private TopicDAO topicDAO;
+	
+	@Inject CommunityDAO communityDAO;
+	
+	@Inject
+	private UserTopicDAO userTopicDAO;
+	
+	@Inject
+	private UserCommunityDAO userCommunityDAO;
 	
 	@GET
 	@Path("/me")
@@ -77,6 +98,48 @@ public class UserResource {
 			throw new WebApplicationException(Response.Status.UNAUTHORIZED);
 		}
 
+		return Response.status(Response.Status.OK).build();
+	}
+	
+	@PUT
+	@Timed
+	@UnitOfWork
+	@Path("/topic")
+	public Response followTopic(@Auth User user, @FormParam("topicId") Long topicId, @FormParam("favorite") Boolean favorite){
+		Topic topic = topicDAO.loadActive(topicId);
+		UserTopic userTopic = userTopicDAO.findByUserAndTopic(user, topic);
+		
+		if(userTopic == null){
+			userTopic = new UserTopic();
+		}
+		
+		userTopic.setFavorite(favorite);;
+		userTopic.setUser(user);
+		userTopic.setTopic(topic);
+		
+		userTopicDAO.save(userTopic);
+		
+		return Response.status(Response.Status.OK).build();
+	}
+
+	@PUT
+	@Timed
+	@UnitOfWork
+	@Path("/community")
+	public Response followCommunity(@Auth User user, @FormParam("communityId") Long communityId, @FormParam("favorite") Boolean favorite){
+		Community community = communityDAO.loadActive(communityId);
+		UserCommunity userCommunity = userCommunityDAO.findByUserAndCommunity(user, community);
+		
+		if(userCommunity == null){
+			userCommunity = new UserCommunity();
+		}
+		
+		userCommunity.setFavorite(favorite);;
+		userCommunity.setUser(user);
+		userCommunity.setCommunity(community);
+		
+		userCommunityDAO.save(userCommunity);
+		
 		return Response.status(Response.Status.OK).build();
 	}
 
