@@ -11,7 +11,7 @@ public class UserDTO {
 	private String email;
 	
 	public UserDTO(User user) {
-		super();
+
 		this.email   = user.getEmail();
 	}
 }

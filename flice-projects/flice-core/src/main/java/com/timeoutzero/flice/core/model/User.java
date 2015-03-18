@@ -25,7 +25,6 @@ public class User extends AbstractEntity {
 	@Column(name = "password")
 	private String password;
 	
-	
 	//Comunidades
 	//Topicos
 }

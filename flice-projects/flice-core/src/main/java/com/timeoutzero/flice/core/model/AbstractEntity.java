@@ -13,4 +13,5 @@ public class AbstractEntity {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
 }

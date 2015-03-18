@@ -26,7 +26,7 @@ public class CoreConfiguration extends Configuration{
 	@NotNull
 	@JsonProperty
 	private DataSourceFactory datasource;
-	
+	 
 	@Valid
     @NotNull
     @JsonProperty

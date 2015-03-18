@@ -18,7 +18,7 @@ public class Community extends AbstractEntity{
 	private String name;
 	
 	@Column(name = "description")
-	private String description;
+	private String description; 
 	
 	@ManyToOne
 	private User owner;

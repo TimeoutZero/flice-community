@@ -14,7 +14,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
@@ -25,35 +24,20 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import com.codahale.metrics.annotation.Timed;
 import com.timeoutzero.flice.core.api.UserDTO;
-import com.timeoutzero.flice.core.dao.CommunityDAO;
-import com.timeoutzero.flice.core.dao.TopicDAO;
-import com.timeoutzero.flice.core.dao.UserCommunityDAO;
-import com.timeoutzero.flice.core.dao.UserDAO;
-import com.timeoutzero.flice.core.dao.UserTopicDAO;
 import com.timeoutzero.flice.core.form.UserForm;
 import com.timeoutzero.flice.core.model.Community;
 import com.timeoutzero.flice.core.model.Topic;
 import com.timeoutzero.flice.core.model.User;
 import com.timeoutzero.flice.core.model.UserCommunity;
 import com.timeoutzero.flice.core.model.UserTopic;
+import com.timeoutzero.flice.core.service.CoreService;
 
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 
 	@Inject
-	private UserDAO dao;
-	
-	@Inject
-	private TopicDAO topicDAO;
-	
-	@Inject CommunityDAO communityDAO;
-	
-	@Inject
-	private UserTopicDAO userTopicDAO;
-	
-	@Inject
-	private UserCommunityDAO userCommunityDAO;
+	private CoreService coreService;
 	
 	@GET
 	@Path("/me")
@@ -72,7 +56,7 @@ public class UserResource {
 	public Response create(@Valid UserForm form) {
 
 		User user = form.toEntity();
-		user = dao.create(user);
+		user = coreService.getUserDAO().create(user);
 
 		UserDTO dto = new UserDTO(user);
 
@@ -86,7 +70,7 @@ public class UserResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response verify(@FormParam("email") String email, @FormParam("password") String password) {
 
-		User user = dao.findByEmail(email);
+		User user = coreService.getUserDAO().findByEmail(email);
 
 		if (user == null) {
 			throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -106,8 +90,9 @@ public class UserResource {
 	@UnitOfWork
 	@Path("/topic")
 	public Response followTopic(@Auth User user, @FormParam("topicId") Long topicId, @FormParam("favorite") Boolean favorite){
-		Topic topic = topicDAO.loadActive(topicId);
-		UserTopic userTopic = userTopicDAO.findByUserAndTopic(user, topic);
+		
+		Topic topic = coreService.getTopicDAO().loadActive(topicId);
+		UserTopic userTopic = coreService.getUserTopicDAO().findByUserAndTopic(user, topic);
 		
 		if(userTopic == null){
 			userTopic = new UserTopic();
@@ -117,7 +102,7 @@ public class UserResource {
 		userTopic.setUser(user);
 		userTopic.setTopic(topic);
 		
-		userTopicDAO.save(userTopic);
+		coreService.getUserTopicDAO().save(userTopic);
 		
 		return Response.status(Response.Status.OK).build();
 	}
@@ -127,8 +112,9 @@ public class UserResource {
 	@UnitOfWork
 	@Path("/community")
 	public Response followCommunity(@Auth User user, @FormParam("communityId") Long communityId, @FormParam("favorite") Boolean favorite){
-		Community community = communityDAO.loadActive(communityId);
-		UserCommunity userCommunity = userCommunityDAO.findByUserAndCommunity(user, community);
+		
+		Community community = coreService.getCommunityDAO().loadActive(communityId);
+		UserCommunity userCommunity = coreService.getUserCommunityDAO().findByUserAndCommunity(user, community);
 		
 		if(userCommunity == null){
 			userCommunity = new UserCommunity();
@@ -138,7 +124,7 @@ public class UserResource {
 		userCommunity.setUser(user);
 		userCommunity.setCommunity(community);
 		
-		userCommunityDAO.save(userCommunity);
+		coreService.getUserCommunityDAO().save(userCommunity);
 		
 		return Response.status(Response.Status.OK).build();
 	}

@@ -5,14 +5,17 @@ import io.dropwizard.hibernate.HibernateBundle;
 import lombok.Getter;
 
 import com.timeoutzero.flice.core.init.CoreConfiguration;
+import com.timeoutzero.flice.core.model.Comment;
+import com.timeoutzero.flice.core.model.Community;
+import com.timeoutzero.flice.core.model.Topic;
 import com.timeoutzero.flice.core.model.User;
+import com.timeoutzero.flice.core.model.UserCommunity;
+import com.timeoutzero.flice.core.model.UserTopic;
 
-
-
-@Getter
 public class HibernateConfiguration {
 
-	private HibernateBundle<CoreConfiguration> bundle = new HibernateBundle<CoreConfiguration>(User.class) {
+	@Getter
+	private HibernateBundle<CoreConfiguration> bundle = new HibernateBundle<CoreConfiguration>(User.class, Community.class, Topic.class, Comment.class, UserCommunity.class, UserTopic.class ) {
 
 		@Override
 		public DataSourceFactory getDataSourceFactory(final CoreConfiguration configuration) {

@@ -12,19 +12,20 @@
 	<properties>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+
 		<!-- JAVA -->
 		<java.version>1.8</java.version>
 
 		<!-- DROPWIZARD -->
 		<dropwizard.version>0.7.1</dropwizard.version>
+		<dropwizar.flyway.version>0.8.0-2</dropwizar.flyway.version>
 
 		<!-- GUICE -->
 		<guice.bundle>0.7.0.2</guice.bundle>
-		
+
 		<!-- SECURITY -->
 		<jbcrypt.version>0.3m</jbcrypt.version>
-	
+
 		<!-- UTIL -->
 		<project.lombok>1.16.2</project.lombok>
 		<mysql.connector.version>5.1.34</mysql.connector.version>
@@ -47,23 +48,29 @@
 			<artifactId>dropwizard-hibernate</artifactId>
 			<version>${dropwizard.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-auth</artifactId>
 			<version>${dropwizard.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-testing</artifactId>
 			<version>${dropwizard.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-client</artifactId>
 			<version>${dropwizard.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.dropwizard.modules</groupId>
+			<artifactId>dropwizard-flyway</artifactId>
+			<version>${dropwizar.flyway.version}</version>
 		</dependency>
 
 		<!-- UTIL -->
@@ -79,13 +86,13 @@
 			<artifactId>lombok</artifactId>
 			<version>${project.lombok}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.connector.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.mindrot</groupId>
 			<artifactId>jbcrypt</artifactId>

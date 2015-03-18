@@ -4,8 +4,8 @@ import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -22,18 +22,18 @@ import javax.ws.rs.core.Response;
 import org.eclipse.jetty.http.HttpStatus;
 
 import com.codahale.metrics.annotation.Timed;
-import com.timeoutzero.flice.core.dao.CommunityDAO;
 import com.timeoutzero.flice.core.dto.CommunityDTO;
 import com.timeoutzero.flice.core.form.CommunityForm;
 import com.timeoutzero.flice.core.model.Community;
 import com.timeoutzero.flice.core.model.User;
+import com.timeoutzero.flice.core.service.CoreService;
 
 @Path("/community")
 @Produces(MediaType.APPLICATION_JSON)
 public class CommunityResource {
 
 	@Inject
-	private CommunityDAO dao;
+	private CoreService coreService;
 	
 	@GET
 	@Timed
@@ -41,9 +41,8 @@ public class CommunityResource {
 	@Path("/{id}")
 	public CommunityDTO findById(@PathParam("id") Long id, @Auth User user){
 		
-		Community community = dao.loadActive(id);
+		Community community = coreService.getCommunityDAO().loadActive(id);
 		return new CommunityDTO(community);
-		
 	}
 	
 	@GET
@@ -51,14 +50,11 @@ public class CommunityResource {
 	@UnitOfWork
 	public List<CommunityDTO> list(@Auth User user){
 		
-		List<Community> list = dao.list();
+		List<Community> list =  coreService.getCommunityDAO().list();
 		
-		List<CommunityDTO> dtos = new ArrayList<CommunityDTO>();
-		for(Community community : list){
-			dtos.add(new CommunityDTO(community));
-		}
-		
-		return dtos;
+		return list.stream()
+				.map(CommunityDTO::new)
+				.collect(Collectors.toList());
 	}
 	
 	@POST
@@ -70,10 +66,9 @@ public class CommunityResource {
 		community.setOwner(user);
 		community.setCreated(LocalDateTime.now());
 		community.setActive(true);
-		community = dao.save(community);
+		community = coreService.getCommunityDAO().save(community);
 		
-		CommunityDTO dto = new CommunityDTO(community);
-		return Response.status(HttpStatus.CREATED_201).entity(dto).build();
+		return Response.status(HttpStatus.CREATED_201).entity( new CommunityDTO(community)).build();
 	}
 	
 	@PUT
@@ -82,13 +77,13 @@ public class CommunityResource {
 	@Path("/{id}")
 	public CommunityDTO update(@PathParam("id") Long id, @Valid CommunityForm form, @Auth User user){
 		
-		Community community = dao.load(id);
+		Community community = coreService.getCommunityDAO().load(id);
 		community.setDescription(form.getDescription());
 		community.setImage(form.getImage());
 		community.setName(form.getName());
 		community.setOwner(user);
 		
-		dao.save(community);
+		coreService.getCommunityDAO().save(community);
 		
 		return new CommunityDTO(community);
 		
@@ -100,10 +95,10 @@ public class CommunityResource {
 	@Path("/{id}")
 	public CommunityDTO delete(@PathParam("id") Long id, @Auth User user){
 		
-		Community community = dao.load(id);
+		Community community = coreService.getCommunityDAO().load(id);
 		community.setActive(false);
 		
-		dao.save(community);
+		coreService.getCommunityDAO().save(community);
 		
 		return new CommunityDTO(community);
 	}

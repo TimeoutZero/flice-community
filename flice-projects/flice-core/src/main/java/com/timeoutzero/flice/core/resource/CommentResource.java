@@ -22,22 +22,18 @@ import javax.ws.rs.core.Response;
 import org.eclipse.jetty.http.HttpStatus;
 
 import com.codahale.metrics.annotation.Timed;
-import com.timeoutzero.flice.core.dao.CommentDAO;
-import com.timeoutzero.flice.core.dao.TopicDAO;
 import com.timeoutzero.flice.core.dto.CommentDTO;
 import com.timeoutzero.flice.core.form.CommentForm;
 import com.timeoutzero.flice.core.model.Comment;
 import com.timeoutzero.flice.core.model.User;
+import com.timeoutzero.flice.core.service.CoreService;
 
 @Path("/comment")
 @Produces(MediaType.APPLICATION_JSON)
 public class CommentResource {
 
 	@Inject
-	private CommentDAO dao;
-	
-	@Inject
-	private TopicDAO topicDAO;
+	private CoreService coreService;
 	
 	@GET
 	@Timed
@@ -45,7 +41,7 @@ public class CommentResource {
 	@Path("/{id}")
 	public CommentDTO findById(@PathParam("id") Long id, @Auth User user){
 		
-		Comment comment = dao.loadActive(id);
+		Comment comment = coreService.getCommentDAO().loadActive(id);
 		return new CommentDTO(comment);
 	}
 	
@@ -54,7 +50,7 @@ public class CommentResource {
 	@UnitOfWork
 	public List<CommentDTO> list(@Auth User user){
 		
-		List<Comment> list = dao.list();
+		List<Comment> list = coreService.getCommentDAO().list();
 		
 		return list.stream()
 				.map(CommentDTO::new)
@@ -70,9 +66,9 @@ public class CommentResource {
 		comment.setActive(true);
 		comment.setCreated(LocalDateTime.now());
 		comment.setOwner(user);
-		comment.setTopic(topicDAO.loadActive(form.getTopicId()));
+		comment.setTopic(coreService.getTopicDAO().loadActive(form.getTopicId()));
 		
-		comment = dao.save(comment);
+		comment = coreService.getCommentDAO().save(comment);
 		
 		CommentDTO dto = new CommentDTO(comment);
 		
@@ -85,12 +81,12 @@ public class CommentResource {
 	@Path("/{id}")
 	public CommentDTO update(@PathParam("id") Long id, @Valid CommentForm form, @Auth User user){
 		
-		Comment comment = dao.load(id);
+		Comment comment = coreService.getCommentDAO().load(id);
 		comment.setContent(form.getContent());
 		comment.setOwner(user);
-		comment.setTopic(topicDAO.loadActive(form.getTopicId()));
+		comment.setTopic(coreService.getTopicDAO().loadActive(form.getTopicId()));
 		
-		comment = dao.save(comment);
+		comment = coreService.getCommentDAO().save(comment);
 		
 		return new CommentDTO(comment);
 	}
@@ -101,9 +97,9 @@ public class CommentResource {
 	@Path("/{id}")
 	public CommentDTO delete(@PathParam("id") Long id, @Auth User user){
 		
-		Comment comment = dao.load(id);
+		Comment comment = coreService.getCommentDAO().load(id);
 		comment.setActive(false);
-		comment = dao.save(comment);
+		comment = coreService.getCommentDAO().save(comment);
 		
 		return new CommentDTO(comment);
 	}

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class UserTopic {
+public class UserTopic extends AbstractEntity {
 
 	@ManyToOne
 	private User user;

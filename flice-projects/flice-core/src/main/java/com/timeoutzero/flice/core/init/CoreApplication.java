@@ -1,12 +1,14 @@
 package com.timeoutzero.flice.core.init;
 
 import io.dropwizard.Application;
+import io.dropwizard.flyway.FlywayBundle;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 import com.google.inject.Stage;
 import com.hubspot.dropwizard.guice.GuiceBundle;
+import com.timeoutzero.flice.core.config.FlywayConfiguration;
 import com.timeoutzero.flice.core.config.HibernateConfiguration;
 
 
@@ -18,7 +20,8 @@ public class CoreApplication extends Application<CoreConfiguration>{
 	private static final String PACKAGE_SECURITY = "com.timeoutzero.flice.core.security";
 
 	private final HibernateBundle<CoreConfiguration> hibernate = new HibernateConfiguration().getBundle();
-
+	private final FlywayBundle<CoreConfiguration>    flyway    = new FlywayConfiguration().getBundle();	
+	
 	public static void main(String[] args) throws Exception {
 		new CoreApplication().run(args);
 	}
@@ -32,7 +35,8 @@ public class CoreApplication extends Application<CoreConfiguration>{
 				.setConfigClass(CoreConfiguration.class)
 				.build(Stage.DEVELOPMENT);
 		
-		bootstrap.addBundle(guice); 
+		bootstrap.addBundle(guice);
+		bootstrap.addBundle(flyway);
 		bootstrap.addBundle(hibernate);
 	}
 

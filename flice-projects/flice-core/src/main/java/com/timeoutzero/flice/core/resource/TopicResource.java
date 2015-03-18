@@ -22,22 +22,18 @@ import javax.ws.rs.core.Response;
 import org.eclipse.jetty.http.HttpStatus;
 
 import com.codahale.metrics.annotation.Timed;
-import com.timeoutzero.flice.core.dao.CommunityDAO;
-import com.timeoutzero.flice.core.dao.TopicDAO;
 import com.timeoutzero.flice.core.dto.TopicDTO;
 import com.timeoutzero.flice.core.form.TopicForm;
 import com.timeoutzero.flice.core.model.Topic;
 import com.timeoutzero.flice.core.model.User;
+import com.timeoutzero.flice.core.service.CoreService;
 
 @Path("/topic")
 @Produces(MediaType.APPLICATION_JSON)
 public class TopicResource {
 
 	@Inject
-	private TopicDAO dao;
-	
-	@Inject
-	private CommunityDAO communityDAO;
+	private CoreService coreService;
 	
 	@GET
 	@Timed
@@ -45,7 +41,7 @@ public class TopicResource {
 	@Path("/{id}")
 	public TopicDTO findById(@PathParam("id") Long id, @Auth User user){
 		
-		Topic topic = dao.loadActive(id);
+		Topic topic = coreService.getTopicDAO().loadActive(id);
 		return new TopicDTO(topic);
 	}
 	
@@ -54,7 +50,7 @@ public class TopicResource {
 	@UnitOfWork
 	public List<TopicDTO> list(@Auth User user){
 		
-		List<Topic> list = dao.list();
+		List<Topic> list = coreService.getTopicDAO().list();
 		
 		List<TopicDTO> dtos = new ArrayList<TopicDTO>();
 		for(Topic topic : list){
@@ -73,13 +69,12 @@ public class TopicResource {
 		
 		topic.setCreated(LocalDateTime.now());
 		topic.setActive(true);
-		topic.setCommunity(communityDAO.loadActive(form.getCommunityId()));
+		topic.setCommunity(coreService.getCommunityDAO().loadActive(form.getCommunityId()));
 		topic.setOwner(user);
 		
-		topic = dao.save(topic);
+		topic = coreService.getTopicDAO().save(topic);
 		
-		TopicDTO dto = new TopicDTO(topic);
-		return Response.status(HttpStatus.CREATED_201).entity(dto).build();
+		return Response.status(HttpStatus.CREATED_201).entity(new TopicDTO(topic)).build();
 	}
 	
 	@PUT
@@ -88,12 +83,12 @@ public class TopicResource {
 	@Path("/{id}")
 	public TopicDTO update(@PathParam("id") Long id, @Valid TopicForm form, @Auth User user){
 		
-		Topic topic = dao.load(id);
-		topic.setCommunity(communityDAO.loadActive(form.getCommunityId()));
+		Topic topic = coreService.getTopicDAO().load(id);
+		topic.setCommunity(coreService.getCommunityDAO().loadActive(form.getCommunityId()));
 		topic.setName(form.getName());
 		topic.setOwner(user);
 		
-		topic = dao.save(topic);
+		topic = coreService.getTopicDAO().save(topic);
 		
 		return new TopicDTO(topic);
 	}
@@ -104,9 +99,9 @@ public class TopicResource {
 	@Path("/{id}")
 	public TopicDTO delete(@PathParam("id") Long id, @Auth User user){
 		
-		Topic topic = dao.load(id);
+		Topic topic = coreService.getTopicDAO().load(id);
 		topic.setActive(false);
-		topic = dao.save(topic);
+		topic = coreService.getTopicDAO().save(topic);
 		
 		return new TopicDTO(topic);
 	}

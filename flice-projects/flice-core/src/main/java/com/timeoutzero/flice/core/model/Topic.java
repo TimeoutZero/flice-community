@@ -16,8 +16,8 @@ public class Topic extends AbstractEntity{
 
 	@Column(name="name")
 	private String name;
-	
-	@ManyToOne
+	 
+	@ManyToOne 
 	private Community community;
 	
 	@ManyToOne
