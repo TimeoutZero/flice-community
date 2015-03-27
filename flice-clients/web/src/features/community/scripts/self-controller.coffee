@@ -1,4 +1,3 @@
-
 'use strict'
 
 # =============================================
@@ -7,12 +6,8 @@
 angular.module 'FliceCommunityWeb.controllers'
 
   # =============================================
-  # CommunityCreateController
+  # CommunityListController
   # =============================================
-  .controller 'CommunityCreateController', ['$scope', '$window',  '$state',
-    ($scope, $window, $state) ->
-
-	    $scope.create = =>
-	    	console.log $scope.community
-
-  ]
+	.controller 'CommunitySelfController', ['$scope', '$window', '$state',
+		($scope, $window, $state) ->
+	]

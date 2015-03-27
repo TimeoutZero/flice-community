@@ -1,5 +1,33 @@
 <div class="app-view">
   <div class="screen-content">
+   
     <h3>Create</h3>
+
+    <form role="role" ng-submit="create()">
+    	<div class="form-group">
+    		
+    		<label>Name: </label> 
+    		<input type="text" ng-model="community.name" class="form-control" placeholder="Community name..." /> 	
+    		
+    		<label>Description: </label>
+    		<input type="text" ng-model="community.description" class="form-control" placeholder="Community description..."></input>
+
+    		<label>Imagem: </label>
+    		<input type="text" ng-model="community.imagem" class="form-control" placeholder="Community image... "></input>
+
+    		<label>Content privacity: </label>
+    		<br />
+
+    		<input type="radio" name="privacity" value="public"> Open - Anyone can view the contents of the community</input>
+    		<br />
+    		
+    		<input type="radio" name="privacity" value="private"> Hidden - Only members can view the contents of the community </input>
+    		<br />
+
+    		<button type="submit" class="btn btn-default">Submit</button>
+
+    	</div>
+    </form>
+
   </div>
 </div>

@@ -3,7 +3,6 @@ package com.timeoutzero.flice.core.resource;
 import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,8 +63,6 @@ public class CommunityResource {
 		
 		Community community = form.toEntity();
 		community.setOwner(user);
-		community.setCreated(LocalDateTime.now());
-		community.setActive(true);
 		community = coreService.getCommunityDAO().save(community);
 		
 		return Response.status(HttpStatus.CREATED_201).entity( new CommunityDTO(community)).build();
@@ -86,7 +83,6 @@ public class CommunityResource {
 		coreService.getCommunityDAO().save(community);
 		
 		return new CommunityDTO(community);
-		
 	}
 	
 	@DELETE

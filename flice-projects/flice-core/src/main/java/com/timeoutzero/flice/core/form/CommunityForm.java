@@ -1,12 +1,14 @@
 package com.timeoutzero.flice.core.form;
 
+import java.time.LocalDateTime;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.timeoutzero.flice.core.model.Community;
-
-import lombok.Getter;
-import lombok.Setter;
 
 @Setter
 @Getter
@@ -29,6 +31,8 @@ public class CommunityForm {
 		community.setName(this.name);
 		community.setDescription(this.description);
 		community.setImage(this.image);
+		community.setCreated(LocalDateTime.now());
+		community.setActive(true);
 		
 		return community;
 	}

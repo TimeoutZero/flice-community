@@ -11,5 +11,4 @@ angular.module 'FliceCommunityWeb.controllers'
   # =============================================
   .controller 'CommunityListController', ['$scope', '$window',  '$state',
     ($scope, $window, $state) ->
-
   ]

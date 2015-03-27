@@ -81,7 +81,7 @@ buildSASS = (options) ->
     .pipe plumberPlugin()
     .pipe gulpSassPlugin(
       indentedSyntax: yes
-      onError: (error) -> feedback.error(name: 'SASS-ERROR', message: error)
+      onError: (error) -> feedback.error(name: 'SASS-ERROR', message: error.message)
     )
     .pipe rename basename: options.renameTo, extname: options.extensionName
     .pipe gulp.dest options.dest
