@@ -16,6 +16,7 @@ angular.module 'FliceCommunityWeb'
     $provide.factory 'UserLoginInterceptor', [ '$q', '$injector', '$rootScope', ($q, $injector, $rootScope) ->
 
       'request': (config) ->
+        if $rootScope.accessToken then config.headers['Authorization'] = "Bearer #{$rootScope.accessToken}"
         return config
 
       'requestError': (rejection)->
@@ -27,6 +28,8 @@ angular.module 'FliceCommunityWeb'
       'responseError': (rejection)->
         if rejection.status is 401
           $injector.invoke ['$state', '$rootScope', ($state, $rootScope) ->
+            $rootScope.accessToken = null
+
             if $state.current.data.restrict
               $rootScope.user = null
               $state.go 'login'

@@ -14,9 +14,11 @@ angular.module 'FliceCommunityWeb.services'
 
       login: (data) ->
         $http
-          url         : APP_BASE_URL + 'login'
+          url         : APP_BASE_URL.SECURITY + 'token'
           method      : 'POST'
-          data        : data
+          data        : $.param(data)
+          headers     :
+            "Content-type": "application/x-www-form-urlencoded"
 
       loginWithFacebook: (data) ->
          $http
@@ -32,7 +34,7 @@ angular.module 'FliceCommunityWeb.services'
 
       loggout: ->
         $http
-          url         : APP_BASE_URL + 'login/loggout'
+          url         : APP_BASE_URL + 'loggout'
           method      : 'POST'
     }
 

@@ -14,7 +14,6 @@ angular.module 'FliceCommunityWeb'
     # =============================================
     $stateProvider
 
-
       # Login
       # ==============================
       .state('login'
@@ -24,7 +23,4 @@ angular.module 'FliceCommunityWeb'
         data        :
           restrict  : no
       )
-
-
-
   ])

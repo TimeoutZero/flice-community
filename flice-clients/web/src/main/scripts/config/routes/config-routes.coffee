@@ -12,7 +12,7 @@ angular.module 'FliceCommunityWeb'
 
     # Default State
     # =============================================
-    $urlRouterProvider.otherwise('/community/list')
+    $urlRouterProvider.otherwise('/login')
 
 
   ])

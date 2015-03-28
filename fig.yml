@@ -6,6 +6,7 @@ nginx:
     - "80:80"
   links:
     - core
+    - security
   volumes:
     - flice-clients/default.conf:/etc/nginx/conf.d/default.conf
     - flice-clients/web/builds/dev/:/usr/share/nginx/html
@@ -20,7 +21,7 @@ mysql:
 
 rabbitmq:
   image: rabbitmq:3.4.4-management
-  ports: 
+  ports:
     - "15672:15672"
 
 core:
@@ -28,7 +29,7 @@ core:
   volumes:
     - flice-projects/flice-core/target/flice-core.jar:/app/flice-core.jar
     - flice-projects/flice-core/src/main/resources/docker.yml:/app/docker.yml
-  ports: 
+  ports:
     - "8080:8080"
     - "9090:9090"
   links:
@@ -40,7 +41,7 @@ security:
   volumes:
     - flice-projects/flice-security/target/flice-security.jar:/app/flice-security.jar
     - flice-projects/flice-security/src/main/resources/docker.yml:/app/docker.yml
-  ports: 
+  ports:
     - "8081:8081"
     - "9091:9091"
   links:

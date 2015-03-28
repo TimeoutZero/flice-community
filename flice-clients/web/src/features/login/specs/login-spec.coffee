@@ -34,3 +34,11 @@ describe 'Controller: LoginController', ()->
   # =============================================
   # Tests
   # =============================================
+  describe 'clickLoginButtonHandler', ->
+    it 'defines scope.user', ()->
+      expect($scope.user).toBeDefined()
+
+
+  describe 'Attributes', ->
+    it 'Should define facebookOptions', ->
+      expect(LoginController.facebookOptions).toBeDefined()

@@ -101,7 +101,6 @@ public class TokenResource {
 		AccessToken token = null;
 
 		if(isValidUser(email, password)) {
-			
 			token = accessTokenDAO.generateAccessToken(email); 
 		}
 		
@@ -141,6 +140,7 @@ public class TokenResource {
 	
 
 	private void isValidClientId(String clientId) {
+		
 	}
 
 	private void isValidGrantType(String grantType) {

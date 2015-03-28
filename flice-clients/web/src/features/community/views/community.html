@@ -5,10 +5,19 @@
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Community </a>
     </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav">
+        <li class="active">
+        	<a ui-sref="community.create" href="#">Create <span class="sr-only">(current)</span></a>
+        </li>
+        <li>
+        	<a ui-sref="community.self"  href="#">Self</a>
+        </li>
+      </ul>
   </div>
 </nav>
 
-<button ui-sref="community.create">Go create</button>
-<button ui-sref="community.self">Go self</button>
 </header>
 <div ui-view=""></div>
