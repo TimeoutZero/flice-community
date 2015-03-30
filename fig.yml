@@ -26,6 +26,12 @@ rabbitmq:
   ports:
     - "15672:15672"
 
+ambassador:
+  image: cpuguy83/docker-grand-ambassador
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  command: "-name flicecommunity_core_1 -name flicecommunity_security_1"
+
 #Applications Configuration
 
 core:
@@ -53,10 +59,4 @@ security:
     - mysql
     - "ambassador:core"
   command: java -jar /app/flice-security.jar server /app/docker.yml
-
-ambassador:
-  image: cpuguy83/docker-grand-ambassador
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name flicecommunity_core_1 -name flicecommunity_security_1"
 

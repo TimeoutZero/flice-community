@@ -11,13 +11,15 @@ angular.module 'FliceCommunityWeb.controllers'
   .controller 'LoginController', ['$scope', '$window', 'LoginService', '$state', '$filter', '$modal', '$q', '$rootScope',
     ($scope, $window, LoginService, $state, $filter, $modal, $q, $rootScope) ->
 
+      $scope.user = ''
+
       # =============================================
       # Attributes
       # =============================================
       @facebookOptions  = scope : 'email, publish_actions', auth_type: 'rerequest'
       $scope.user       =
-        username  : "admin@admin.com"
-        password  : 12345
+        username  : $scope.user.username
+        password  : $scope.user.password
         "grant_type" : 'password'
         "client_id"  : ''
 
@@ -54,6 +56,7 @@ angular.module 'FliceCommunityWeb.controllers'
         promise.success (data, status, headers, config) ->
           $rootScope.accessToken = data?.accessToken
           $scope.openNotificationModal('Connected !! hohoho o/')
+          $state.go 'community.self'
         promise.error (data, status, headers, config, statusText) ->
           $scope.openNotificationModal('Could not connect')
 

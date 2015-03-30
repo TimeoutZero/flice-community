@@ -68,7 +68,6 @@ public class UserResource {
 	}
 
 	@POST
-	@Timed
 	@UnitOfWork
 	@Path("/verify")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)

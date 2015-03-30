@@ -98,16 +98,18 @@ public class TokenResource {
 	public Response postForToken(
 			@FormParam("grant_type") String grantType,
 			@FormParam("client_id") String clientId, 
-			@FormParam("email") String email,
+			@FormParam("username") String username,
 			@FormParam("password") String password) {
+
+		log.info("Attempt create token to user: {}", username);
 		
 		isValidGrantType(grantType);
 		isValidClientId(clientId);
 		
 		AccessToken token = null;
 
-		if(isValidUser(email, password)) {
-			token = accessTokenDAO.generateAccessToken(email); 
+		if(isValidUser(username, password)) {
+			token = accessTokenDAO.generateAccessToken(username); 
 		}
 		
 		return Response.status(HttpStatus.CREATED_201).entity(new AccessTokenDTO(token.getToken())).build();
@@ -119,7 +121,7 @@ public class TokenResource {
 		
 		try {
 			
-			log.info("[CORE API: {} ]", coreApiUrl);
+			log.info("CORE API: {} ", coreApiUrl);
 
 			HttpPost request = new HttpPost(coreApiUrl);
 			request.setHeader(HttpHeader.CONTENT_TYPE.toString(), MediaType.APPLICATION_FORM_URLENCODED);

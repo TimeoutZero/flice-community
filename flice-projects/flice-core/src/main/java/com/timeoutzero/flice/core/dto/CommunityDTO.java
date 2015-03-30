@@ -2,9 +2,9 @@ package com.timeoutzero.flice.core.dto;
 
 import java.time.LocalDateTime;
 
-import com.timeoutzero.flice.core.model.Community;
-
 import lombok.Getter;
+
+import com.timeoutzero.flice.core.model.Community;
 
 @Getter
 public class CommunityDTO {
@@ -21,6 +21,7 @@ public class CommunityDTO {
 	
 	public CommunityDTO(Community community){
 		super();
+		
 		this.name = community.getName();
 		this.description = community.getDescription();
 		this.owner = community.getOwner().getName();
