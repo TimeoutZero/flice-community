@@ -42,4 +42,10 @@ public class SecurityModule extends AbstractModule {
 		return new HttpClientBuilder(environment).using(configuraiton.getHttpClient()).build("httpClient");
 	}
 	
+	@Provides
+	@Singleton
+	public String coreApiUrl(SecurityConfiguration configuration) {
+		return configuration.getCoreApiUrl();
+	}
+	
 }

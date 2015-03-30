@@ -1,5 +1,7 @@
 ---
 
+#Infrastrucure Configuration
+
 nginx:
   image: nginx
   ports:
@@ -24,6 +26,8 @@ rabbitmq:
   ports:
     - "15672:15672"
 
+#Applications Configuration
+
 core:
   image: lucasgmartins/java8
   volumes:
@@ -34,6 +38,7 @@ core:
     - "9090:9090"
   links:
     - mysql
+    - "ambassador:security"
   command: java -jar /app/flice-core.jar server /app/docker.yml
 
 security:
@@ -46,5 +51,12 @@ security:
     - "9091:9091"
   links:
     - mysql
+    - "ambassador:core"
   command: java -jar /app/flice-security.jar server /app/docker.yml
+
+ambassador:
+  image: cpuguy83/docker-grand-ambassador
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  command: "-name flicecommunity_core_1 -name flicecommunity_security_1"
 

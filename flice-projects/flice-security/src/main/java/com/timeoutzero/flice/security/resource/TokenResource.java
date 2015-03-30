@@ -28,6 +28,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
@@ -43,6 +45,7 @@ import com.timeoutzero.flice.security.model.AccessToken;
 public class TokenResource {
 	
 	private static final int ACCESS_TOKEN_EXPIRE_TIME_MIN = 30;
+	private static final Logger log = LoggerFactory.getLogger(TokenResource.class);
 	
 	@Inject
 	private HttpClient httpClient;
@@ -52,6 +55,9 @@ public class TokenResource {
 	
 	@Inject
 	private ImmutableList<String> allowedGrantType;
+	
+	@Inject
+	private String coreApiUrl;
 	
 	@GET
 	@UnitOfWork
@@ -113,9 +119,11 @@ public class TokenResource {
 		
 		try {
 			
-			HttpPost request = new HttpPost("http://localhost:8080/core/api/user/verify");
+			log.info("[CORE API: {} ]", coreApiUrl);
+
+			HttpPost request = new HttpPost(coreApiUrl);
 			request.setHeader(HttpHeader.CONTENT_TYPE.toString(), MediaType.APPLICATION_FORM_URLENCODED);
-			
+						
 			List<NameValuePair> params = new ArrayList<>();
 			params.add(new BasicNameValuePair("email", email));
 			params.add(new BasicNameValuePair("password", password));
@@ -124,14 +132,17 @@ public class TokenResource {
 			
 			int status = httpClient.execute(request).getStatusLine().getStatusCode();
 			
+			log.info("STATUS {}", status);
 			if(status == HttpStatus.OK_200) {
 				isValidUser = true;
 			} else {
+				
 				throw new WebApplicationException(status);
 			}
 			
 			
 		} catch (RuntimeException | IOException e) {
+			log.error(e.getLocalizedMessage());
 			throw new WebApplicationException(e);
 		}
 		

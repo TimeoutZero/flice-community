@@ -21,6 +21,8 @@ import javax.ws.rs.core.Response;
 
 import org.eclipse.jetty.http.HttpStatus;
 import org.mindrot.jbcrypt.BCrypt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.codahale.metrics.annotation.Timed;
 import com.timeoutzero.flice.core.api.UserDTO;
@@ -36,6 +38,8 @@ import com.timeoutzero.flice.core.service.CoreService;
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 
+	private static final Logger log = LoggerFactory.getLogger(UserResource.class);
+	
 	@Inject
 	private CoreService coreService;
 	
@@ -69,7 +73,8 @@ public class UserResource {
 	@Path("/verify")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response verify(@FormParam("email") String email, @FormParam("password") String password) {
-
+		
+		log.info("Verify email {}", email);
 		User user = coreService.getUserDAO().findByEmail(email);
 
 		if (user == null) {

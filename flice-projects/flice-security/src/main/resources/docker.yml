@@ -1,7 +1,12 @@
 ---
 
+#Custom Applications Config
 application           : "flice-security"
 application-client-id : "Y29yZQ=="
+
+coreApiUrl        : "http://core:8080/core/api/user/verify"
+
+#Commom Applications Config
 
 server:
   applicationConnectors:

@@ -34,6 +34,9 @@ public class CoreAuthenticator implements Authenticator<String, User> {
 
 	@Inject
 	private UserDAO userDAO;
+
+	@Inject
+	private String securityApiUrl;
 	
 	@Override
 	public Optional<User> authenticate(String token) throws AuthenticationException {
@@ -53,10 +56,12 @@ public class CoreAuthenticator implements Authenticator<String, User> {
 	private Optional<String> getEmailByAccesToken(String token) {
 		
 		String email = null;
-
+		
 		try {
 			
-			HttpUriRequest request = new HttpGet("http://localhost:8081/security/api/token/verify"); 
+			log.info("SECURITY API: {}", securityApiUrl);
+			
+			HttpUriRequest request = new HttpGet(securityApiUrl); 
 			request.addHeader("accessToken", token);
 			
 			HttpResponse response = client.execute(request);
@@ -73,6 +78,7 @@ public class CoreAuthenticator implements Authenticator<String, User> {
 			}
 		
 		} catch (IOException e) {
+			log.error(e.getMessage());
 			throw new WebApplicationException(e);
 		}
 		

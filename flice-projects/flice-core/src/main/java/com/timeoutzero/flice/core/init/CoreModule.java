@@ -38,4 +38,10 @@ public class CoreModule extends AbstractModule {
 	public HttpClient httpClient(Environment environment, CoreConfiguration configuraiton) {
 		return new HttpClientBuilder(environment).using(configuraiton.getHttpClient()).build(CLIENT);
 	}
+	
+	@Provides
+	@Singleton
+	public String securityApiUrl(CoreConfiguration configuration) {
+		return configuration.getSecurityApiUrl();
+	}
 }
