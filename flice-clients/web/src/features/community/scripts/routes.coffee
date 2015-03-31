@@ -31,7 +31,6 @@ angular.module 'FliceCommunityWeb'
         views :
           '' :
             templateUrl : 'views/features/community/views/self.html'
-
           'community-menu@community.self':
             templateUrl: 'views/features/community/views/self/menu.html'
           'community-description@community.self':

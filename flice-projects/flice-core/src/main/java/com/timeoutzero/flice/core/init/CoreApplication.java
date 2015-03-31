@@ -41,13 +41,18 @@ public class CoreApplication extends Application<CoreConfiguration>{
 		bootstrap.addBundle(guice);
 		bootstrap.addBundle(flyway);
 		bootstrap.addBundle(hibernate);
-		
 	}
 
 	@Override
 	public void run(CoreConfiguration configuration, Environment environment) throws Exception {
 		
 		environment.jersey().setUrlPattern(CORE_URL_API);
+		
+		//Custom Tasks
+		executeFlywayMigration(configuration);
+	}
+
+	private void executeFlywayMigration(CoreConfiguration configuration) {
 		
 		DataSourceFactory db = configuration.getDatasource(); 
 		
