@@ -2,23 +2,25 @@
 
 #Custom Applications Config
 application           : "flice-core"
-application-client-id : "Y29yZQ=="
+applicationClientId   : "Y29yZQ=="
 
 securityApiUrl        : "http://localhost:8081/security/api/token/verify"
 
 #Commom Applications Config
 server:
   applicationConnectors:
-  - type: http 
+  - type: http
     port: 8080
   adminConnectors:
   - type: http
     port: 9090
 
-datasource: 
+#Database Application Config
+
+datasource:
 
   user            : root
-  password        : 
+  password        :
   url             : jdbc:mysql://localhost:3306/flice-core
   driverClass     : com.mysql.jdbc.Driver
 
@@ -27,7 +29,12 @@ datasource:
 
   properties:
     hibernate.dialect       : org.hibernate.dialect.MySQLDialect
-    hibernate.hbm2ddl.auto  : create-drop
+    hibernate.hbm2ddl.auto  : none
+    # hibernate.show_sql      : true
+    # hibernate.format_sql    : true
+
+flyway:
+  encoding: UTF-8
 
 logging:
   level: INFO

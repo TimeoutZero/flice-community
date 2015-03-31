@@ -34,6 +34,8 @@ public class CoreModule extends AbstractModule {
 		});
 	}
 	
+	
+	
 	@Provides @Singleton
 	public HttpClient httpClient(Environment environment, CoreConfiguration configuraiton) {
 		return new HttpClientBuilder(environment).using(configuraiton.getHttpClient()).build(CLIENT);

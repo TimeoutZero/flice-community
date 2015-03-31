@@ -1,10 +1,13 @@
 package com.timeoutzero.flice.core.init;
 
 import io.dropwizard.Application;
+import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.flyway.FlywayBundle;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+
+import org.flywaydb.core.Flyway;
 
 import com.google.inject.Stage;
 import com.hubspot.dropwizard.guice.GuiceBundle;
@@ -38,11 +41,18 @@ public class CoreApplication extends Application<CoreConfiguration>{
 		bootstrap.addBundle(guice);
 		bootstrap.addBundle(flyway);
 		bootstrap.addBundle(hibernate);
+		
 	}
 
 	@Override
 	public void run(CoreConfiguration configuration, Environment environment) throws Exception {
 		
 		environment.jersey().setUrlPattern(CORE_URL_API);
+		
+		DataSourceFactory db = configuration.getDatasource(); 
+		
+		Flyway flyway = new Flyway();
+		flyway.setDataSource(db.getUrl(), db.getUser(), db.getPassword());
+		flyway.migrate();
 	}
 }

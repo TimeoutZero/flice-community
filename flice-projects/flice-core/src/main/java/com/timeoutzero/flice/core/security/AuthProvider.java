@@ -11,12 +11,14 @@ import com.timeoutzero.flice.core.model.User;
 @Provider
 public class AuthProvider extends OAuthProvider<User> {
 
+	private static final String OAUTH2_PROVIDER = "oauth2-provider";
+
 	public AuthProvider(Authenticator<String, User> authenticator, String realm) {
 		super(authenticator, realm);
 	}
 	
 	@Inject
 	public AuthProvider(CoreAuthenticator authenticator) {
-		super(authenticator, "oauth2-provider");
+		super(authenticator, OAUTH2_PROVIDER);
 	}
 }
