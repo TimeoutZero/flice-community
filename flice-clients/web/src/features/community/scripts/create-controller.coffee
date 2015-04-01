@@ -9,10 +9,10 @@ angular.module 'FliceCommunityWeb.controllers'
   # =============================================
   # CommunityCreateController
   # =============================================
-  .controller 'CommunityCreateController', ['$scope', '$window',  '$state',
-    ($scope, $window, $state) ->
+  .controller 'CommunityCreateController', ['$scope', '$window',  '$state', 'CommunityService'
+    ($scope, $window, $state, communityService) ->
 
 	    $scope.create = =>
-	    	console.log $scope.community
+	    	communityService.create $scope.community
 
   ]

@@ -14,4 +14,10 @@ angular.module 'FliceCommunityWeb.services'
       $http
         url           : APP_BASE_URL + 'community/list'
         method        : 'GET'
+
+    create: (data) ->
+    	$http
+    		url 					: APP_BASE_URL.CORE + "community"
+    		method 				: 'POST'
+    		data					: data
   ]
