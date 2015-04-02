@@ -1,5 +1,6 @@
 ---
 
+
 #Custom Applications Config
 application           : "flice-core"
 application-client-id : "Y29yZQ=="
@@ -8,6 +9,9 @@ securityApiUrl        : "http://security:8081/security/api/token/verify"
 
 #Commom Applications Config
 
+logging:
+  level: INFO
+
 server:
   applicationConnectors:
   - type: http 
@@ -15,6 +19,8 @@ server:
   adminConnectors:
   - type: http
     port: 9090
+
+#Database Application Config
 
 datasource: 
 
@@ -28,10 +34,7 @@ datasource:
 
   properties:
     hibernate.dialect       : org.hibernate.dialect.MySQLDialect
-    hibernate.hbm2ddl.auto  : create-drop
-
-logging:
-  level: INFO
+    hibernate.hbm2ddl.auto  : none
 
 httpClient:
   timeout                 : 20000ms
