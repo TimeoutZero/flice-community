@@ -34,11 +34,6 @@ public class CoreConfiguration extends Configuration{
 	@NotNull
 	@JsonProperty
 	private DataSourceFactory datasource;
-	
-	@Valid
-	@NotNull
-	@JsonProperty
-	private FlywayFactory flyway;
 	 
 	@Valid
     @NotNull
