@@ -1,8 +1,8 @@
 package com.timeoutzero.flice.core.dto;
 
-import java.time.LocalDateTime;
-
 import lombok.Getter;
+
+import org.joda.time.LocalDateTime;
 
 import com.timeoutzero.flice.core.model.Topic;
 

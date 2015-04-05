@@ -3,7 +3,6 @@ package com.timeoutzero.flice.core.resource;
 import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.eclipse.jetty.http.HttpStatus;
+import org.joda.time.LocalDateTime;
 
 import com.codahale.metrics.annotation.Timed;
 import com.timeoutzero.flice.core.dto.TopicDTO;

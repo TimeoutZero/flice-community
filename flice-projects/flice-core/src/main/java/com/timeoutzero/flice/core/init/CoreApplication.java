@@ -1,17 +1,13 @@
 package com.timeoutzero.flice.core.init;
 
 import io.dropwizard.Application;
-import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
-import org.flywaydb.core.Flyway;
-
 import com.google.inject.Stage;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import com.timeoutzero.flice.core.config.HibernateConfiguration;
-
 
 public class CoreApplication extends Application<CoreConfiguration>{
 
@@ -28,7 +24,7 @@ public class CoreApplication extends Application<CoreConfiguration>{
 	
 	@Override
 	public void initialize(Bootstrap<CoreConfiguration> bootstrap) {
-		
+
 		GuiceBundle<CoreConfiguration> guice = GuiceBundle.<CoreConfiguration>newBuilder()
 				.enableAutoConfig(PACKAGE_DAO, PACKAGE_RESOURCE, PACKAGE_SECURITY)
 				.addModule(new CoreModule(hibernate))
@@ -42,18 +38,10 @@ public class CoreApplication extends Application<CoreConfiguration>{
 	@Override
 	public void run(CoreConfiguration configuration, Environment environment) throws Exception {
 		
+		//Environment
 		environment.jersey().setUrlPattern(CORE_URL_API);
 		
 		//Custom Tasks
-		executeFlywayMigration(configuration);
-	}
-
-	private void executeFlywayMigration(CoreConfiguration configuration) {
-		
-		DataSourceFactory db = configuration.getDatasource(); 
-		
-		Flyway flyway = new Flyway();
-		flyway.setDataSource(db.getUrl(), db.getUser(), db.getPassword());
-		flyway.migrate();
+		StartupModule.executeFlywayMigration(configuration);
 	}
 }

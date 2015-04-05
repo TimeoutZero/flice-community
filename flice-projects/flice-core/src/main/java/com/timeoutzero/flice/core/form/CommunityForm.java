@@ -1,11 +1,10 @@
 package com.timeoutzero.flice.core.form;
 
-import java.time.LocalDateTime;
-
 import lombok.Getter;
 import lombok.Setter;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.joda.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.timeoutzero.flice.core.model.Community;

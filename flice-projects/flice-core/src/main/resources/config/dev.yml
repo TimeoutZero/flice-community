@@ -34,10 +34,7 @@ datasource:
   properties:
     hibernate.dialect       : org.hibernate.dialect.MySQLDialect
     hibernate.hbm2ddl.auto  : none
-
-
-flyway:
-  encoding: UTF-8
+    jadira.usertype.autoRegisterUserTypes : true
 
 httpClient:
   timeout                 : 20000ms
