@@ -24,7 +24,7 @@ public class CoreConfiguration extends Configuration{
 	@Valid
 	@JsonProperty
 	private String applicationClientId;
-	
+		
 	@Valid
 	@NotNull
 	@JsonProperty

@@ -38,7 +38,7 @@ public class CoreApplication extends Application<CoreConfiguration>{
 	@Override
 	public void run(CoreConfiguration configuration, Environment environment) throws Exception {
 		
-		//Environment
+		//Environment 
 		environment.jersey().setUrlPattern(CORE_URL_API);
 		
 		//Custom Tasks
