@@ -8,8 +8,8 @@ angular.module 'FliceCommunityWeb.controllers'
   # =============================================
   # LoginController
   # =============================================
-  .controller 'LoginController', ['$scope', '$window', 'LoginService', '$state', '$filter', '$modal', '$q', '$rootScope',
-    ($scope, $window, LoginService, $state, $filter, $modal, $q, $rootScope) ->
+  .controller 'LoginController', ['$scope', '$window', 'LoginService', '$state', '$filter', '$modal', '$q', '$rootScope', '$cookies',
+    ($scope, $window, LoginService, $state, $filter, $modal, $q, $rootScope, $cookies) ->
 
       $scope.user = ''
 
@@ -54,7 +54,8 @@ angular.module 'FliceCommunityWeb.controllers'
       $scope.doLogin  = ->
         promise = LoginService.login($scope.user)
         promise.success (data, status, headers, config) ->
-          $rootScope.accessToken = data?.accessToken
+          #$rootScope.accessToken = data?.accessToken
+          $cookies.put('accessToken', data?.accessToken)
           $scope.openNotificationModal('Connected !! hohoho o/')
           $state.go 'community.self'
         promise.error (data, status, headers, config, statusText) ->

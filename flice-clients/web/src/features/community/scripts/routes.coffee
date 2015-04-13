@@ -25,17 +25,20 @@ angular.module 'FliceCommunityWeb'
       )
 
       .state('community.self'
-        url         : '/self'
-        controller  : 'CommunitySelfController'
+        url         : '/:id'
 
         views :
           '' :
+            controller  : 'CommunitySelfController'
             templateUrl : 'views/features/community/views/self.html'
           'community-menu@community.self':
+            controller  : 'CommunitySelfMenuController'
             templateUrl: 'views/features/community/views/self/menu.html'
           'community-description@community.self':
+            controller  : 'CommunitySelfDescriptionController'
             templateUrl: 'views/features/community/views/self/description.html'
           'community-members@community.self':
+            controller  : 'CommunitySelfMembersController'
             templateUrl: 'views/features/community/views/self/members.html'
       )
 

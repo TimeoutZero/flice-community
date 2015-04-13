@@ -80,6 +80,8 @@ public class TokenResource {
 			String currentTimeFormatted = LocalDateTime.now().toString();
 			String message = String.format(OAuthProblem.SESSION_HAS_EXPIRED, lastAccessFormatted, currentTimeFormatted);
 			
+			log.info(message);
+			
 			throw new WebApplicationException(Response.status(HttpStatus.UNAUTHORIZED_401).entity(new OAuthProblem(message)).build());
 		}
 		

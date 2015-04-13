@@ -11,4 +11,8 @@ scripts/features/community/scripts/community-controller.js
 scripts/features/community/scripts/create-controller.js
 scripts/features/community/scripts/edit-controller.js
 scripts/features/community/scripts/list-controller.js
+scripts/features/community/scripts/self-controller.js
+scripts/features/community/scripts/self-menu-controller.js
+scripts/features/community/scripts/self-description-controller.js
+scripts/features/community/scripts/self-members-controller.js
 

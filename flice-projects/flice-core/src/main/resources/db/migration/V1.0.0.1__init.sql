@@ -7,7 +7,7 @@ CREATE TABLE `Comment` (
   `owner_id` bigint(20) DEFAULT NULL,
   `topic_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `` (`owner_id`),
+  KEY `FK_gwrw905k51p92f40d8hadue07` (`owner_id`),
   KEY `FK_n38k0lxv5gd37x9jkokejluc2` (`topic_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

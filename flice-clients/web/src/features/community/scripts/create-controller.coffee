@@ -13,6 +13,8 @@ angular.module 'FliceCommunityWeb.controllers'
     ($scope, $window, $state, communityService) ->
 
 	    $scope.create = =>
-	    	communityService.create $scope.community
+	    	promise = communityService.create $scope.community
+	    	promise.success (data) ->
+          $state.go("community.self", { id : data.id })
 
   ]
