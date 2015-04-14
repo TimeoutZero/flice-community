@@ -55,7 +55,7 @@ angular.module 'FliceCommunityWeb.controllers'
         promise = LoginService.login($scope.user)
         promise.success (data, status, headers, config) ->
           #$rootScope.accessToken = data?.accessToken
-          $cookies.put('accessToken', data?.accessToken)
+          $cookies['accessToken'] = data.accessToken if data
           $scope.openNotificationModal('Connected !! hohoho o/')
           $state.go 'community.self'
         promise.error (data, status, headers, config, statusText) ->

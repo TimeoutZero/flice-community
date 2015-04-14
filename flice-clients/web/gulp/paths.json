@@ -9,9 +9,9 @@
 
     "css" : {
       "mainCssFileName" : "vendors",
-      "sourceFiles": "vendors/**/*.css" 
-    } 
-      
+      "sourceFiles": "vendors/**/*.css"
+    }
+
   },
 
   "source" : {
@@ -37,9 +37,9 @@
     },
 
     "resourcesFiles": "src/main/resources/**/*",
-    
+
     "indexFile": "src/main/index.html"
-    
+
   },
 
 
@@ -60,7 +60,7 @@
 
     "htmlFiles"          : "builds/dev/views/**/*",
     "imgFiles"           : "builds/dev/img/**/*"
-     
+
   },
 
 
@@ -79,7 +79,7 @@
     "resourcesFiles"      : ["builds/release/resources/**/*", "!builds/release/resources/include-source-list"]
   },
 
-  
+
   "spec" : {
     "js" : {
       "sourceFiles" : [
@@ -93,6 +93,7 @@
         "builds/dev/libs/underscore-string/underscore-string.min.js",
         "builds/dev/libs/momentjs/min/moment-with-langs.js",
         "builds/dev/libs/quick-ng-repeat/quick-ng-repeat.js",
+        "builds/dev/libs/angular-cookies/angular-cookies.js",
         "builds/dev/scripts/main/scripts/app.js",
         "builds/dev/scripts/components/**/*.js",
         "builds/dev/scripts/features/**/*.js",
@@ -107,5 +108,5 @@
 
   "bowerDirectory" : "bower_components/**/*"
 
-    
+
 }

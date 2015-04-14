@@ -29,6 +29,7 @@ angular.module 'FliceCommunityWeb.scripts'     , [
 # Main Module
 # =============================================
 angular.module('FliceCommunityWeb', [
+  'ngCookies'
   'ngSanitize'
   'QuickList'
   'ui.router'

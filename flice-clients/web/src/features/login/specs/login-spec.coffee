@@ -12,6 +12,7 @@ describe 'Controller: LoginController', ()->
   beforeEach module('ui.bootstrap')
   beforeEach module('FliceCommunityWeb.scripts')
   beforeEach module('stateMock')
+  beforeEach module('ngCookies')
 
   # =============================================
   # Variables

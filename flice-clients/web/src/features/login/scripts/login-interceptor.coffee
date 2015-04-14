@@ -13,9 +13,9 @@ angular.module 'FliceCommunityWeb'
     # =============================================
     # UserLoginInterceptor
     # =============================================
-    $provide.factory 'UserLoginInterceptor', [ '$q', '$injector', '$rootScope' , '$cookies', ($q, $injector, $rootScope, $injector.invoke(['$cookies', ($cookies) -> ])) ->
+    $provide.factory 'UserLoginInterceptor', [ '$q', '$injector', '$rootScope' , '$cookies', ($q, $injector, $rootScope, $cookies) ->
       'request': (config) ->
-        accessToken = $cookies.get('accessToken')
+        accessToken = $cookies['accessToken']
         if accessToken then config.headers['Authorization'] = "Bearer #{accessToken}"
         return config
 
