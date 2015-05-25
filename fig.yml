@@ -12,6 +12,7 @@ nginx:
   volumes:
     - flice-clients/default.conf:/etc/nginx/conf.d/default.conf
     - flice-clients/web/builds/dev/:/usr/share/nginx/html
+
 mysql:
   image: lucasgmartins/mysql
   ports:
